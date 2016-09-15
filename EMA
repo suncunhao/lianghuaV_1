@@ -1,0 +1,12 @@
+function EMAValue=ema(Price,Length)
+%指数移动平均
+EMAValue=zeros(length(Price),1);
+K=2/(Length+1);
+for i=1:length(Price)
+    if i==1
+        EMAValue(i)=Price(i);
+    else
+        EMAValue(i)=Price(i)*K+EMAValue(i-1)*(1-K);
+    end
+end
+end
