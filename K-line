@@ -1,0 +1,29 @@
+tic;
+
+ema20 = ema(closeprice,20);
+ax1 = subplot(2,1,1);
+ candle(highprice,lowprice,closeprice,openprice);
+ hold on;
+ plot (ema20,'r');
+n = size(closeprice,1);
+DEA =  zeros(size(closeprice));
+ema12 = ema(closeprice,12);
+ema26 = ema(closeprice,26);
+for i = 1:n
+    DIFF(i,1) = ema12(i,1) - ema26(i,1);
+end
+for i = 2:n
+    DEA(i,1) = DEA(i-1,1)*0.8+DIFF(i,1)*0.2;
+end
+for i = 1:n
+    MACD(i,1) = 2*(DIFF(i,1)-DEA(i,1)); 
+end
+
+ax2 = subplot(2,1,2);
+plot (DIFF);
+hold on;
+plot (DEA,'r');
+hold on;
+bar (MACD);
+linkaxes([ax1,ax2],'x');
+toc;
